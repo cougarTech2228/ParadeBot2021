@@ -33,6 +33,7 @@ void processControllerData(){
           processSBusBuffer();
           handleDriveMotors();
           processBallInput();
+          processCandyInput();
         }
         else
         {

@@ -120,6 +120,7 @@ void setup() {
 
   setupDriveMotors();
   setupBallShooter();
+  setupCandyShooter();
   //The SBUS is a non standard baud rate of 100 kbs
   Serial1.begin(100000, SERIAL_8E2);
   // put your setup code here, to run once:
