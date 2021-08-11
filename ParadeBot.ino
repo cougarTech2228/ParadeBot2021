@@ -44,8 +44,8 @@ static const int TURN_COMPENSATION = 7;
 
 /* Radio link channels */
 static const int RIGHT_STICK_X = 1;
-static const int LEFT_STICK_Y = 3;
-static const int RIGHT_STICK_Y = 2;
+static const int LEFT_STICK_Y = 2;
+static const int RIGHT_STICK_Y = 3;
 static const int LEFT_STICK_X = 4;
 static const int RIGHT_TOGGLE = 5;
 static const int BUTTON = 6;
