@@ -7,7 +7,6 @@ void setupCandyShooter(){
 
 void processCandyInput(){
     if(robotMode != ROBOT_MODE_CANDY){
-        Serial.println("Not in candy mode");
         return;
     }
 

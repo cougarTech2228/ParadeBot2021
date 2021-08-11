@@ -12,8 +12,8 @@ static const int CHILD_MODE_BUTTON_PIN = 26;
 static const int ENABLE_BOT_LED_PIN = 29;
 static const int CHILD_MODE_LED_PIN = 28;
 
-static const int RIGHT_DRIVE_MOTOR_PIN = 9;
-static const int LEFT_DRIVE_MOTOR_PIN = 10;
+static const int RIGHT_DRIVE_MOTOR_PIN = 13;
+static const int LEFT_DRIVE_MOTOR_PIN = 14;
 
 static const int BALL_SHOOTER_LEFT_PIN = 7;
 static const int BALL_SHOOTER_RIGHT_PIN = 8;
@@ -44,8 +44,8 @@ static const int TURN_COMPENSATION = 7;
 
 /* Radio link channels */
 static const int RIGHT_STICK_X = 1;
-static const int LEFT_STICK_Y = 2;
-static const int RIGHT_STICK_Y = 3;
+static const int LEFT_STICK_Y = 3;
+static const int RIGHT_STICK_Y = 2;
 static const int LEFT_STICK_X = 4;
 static const int RIGHT_TOGGLE = 5;
 static const int BUTTON = 6;
@@ -85,7 +85,7 @@ int radioLinkToggleLeft = -1;
 int radioLinkButton = -1;
 
 Servo rightDriveMotor, leftDriveMotor;
-
+Servo ballShooterMotor;
 bool failSafeEnabled = false;
 bool botEnabled = false;
 bool childModeEnabled = true;

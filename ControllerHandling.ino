@@ -15,7 +15,7 @@ void processControllerData(){
       //so start reading the 25 byte packet
       if ((sBusByteIndex == 0) && (nextSBusByte != 0x0F))
       {
-                  Serial.println("Enabled");
+                 // Serial.println("Enabled");
         // error - keep waiting for the start byte
       }
       else
@@ -37,6 +37,7 @@ void processControllerData(){
         }
         else
         {
+          Serial.println("Error!");
           sBusErrors++; //?????
         }
       }
@@ -113,8 +114,6 @@ void processSBusBuffer()
   {
     receivedOneSBusPacketSinceReset = true;
     //wdt_reset();
-    Serial.println(channels[5]);
-    Serial.println(channels[6]);
 
 //TODO TOGGLES AND BUTTON
     radioLinkDriveX = channels[RIGHT_STICK_X];
