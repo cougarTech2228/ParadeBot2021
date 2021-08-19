@@ -30,9 +30,9 @@ void handleDriveMotors() {
   rightDriveMotor.write(right);
   leftDriveMotor.write(left);
 
-  Serial.print(right);
-  Serial.print(", ");
-  Serial.println(left);
+  //Serial.print(right);
+  //Serial.print(", ");
+  //Serial.println(left);
 }
 /**************************************************************
    applyDeadband()

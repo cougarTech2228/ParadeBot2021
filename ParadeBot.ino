@@ -25,6 +25,7 @@ static const int CANDY_SHOOTER_RELAY_PIN = 23;
 
 static const int TURRET_LIMIT_LEFT = 24;
 static const int TURRET_LIMIT_RIGHT = 25;
+static const int TURRET_ENCODER_PIN = A0;
 
 static const int MIN_PWM_SIGNAL_WIDTH = 1000;
 static const int MAX_PWM_SIGNAL_WIDTH = 2000;
@@ -44,8 +45,8 @@ static const int TURN_COMPENSATION = 7;
 
 /* Radio link channels */
 static const int RIGHT_STICK_X = 1;
-static const int LEFT_STICK_Y = 2;
-static const int RIGHT_STICK_Y = 3;
+static const int LEFT_STICK_Y = 3;
+static const int RIGHT_STICK_Y = 2;
 static const int LEFT_STICK_X = 4;
 static const int RIGHT_TOGGLE = 5;
 static const int BUTTON = 6;
@@ -85,7 +86,7 @@ int radioLinkToggleLeft = -1;
 int radioLinkButton = -1;
 
 Servo rightDriveMotor, leftDriveMotor;
-Servo ballShooterMotor;
+Servo ballShooterMotor, turretMotor;
 bool failSafeEnabled = false;
 bool botEnabled = false;
 bool childModeEnabled = true;
@@ -140,6 +141,7 @@ void setup() {
   wdt_enable(WDTO_1S);
   botEnabled = false;
 
+  pinMode(A12, INPUT);
   Serial.println("Set up");
 }
 
@@ -171,6 +173,8 @@ void loop() {
   
   digitalWrite(CHILD_MODE_LED_PIN, childModeEnabled);
   digitalWrite(ENABLE_BOT_LED_PIN, botEnabled);
+
+  
 }
 
 /**************************************************************

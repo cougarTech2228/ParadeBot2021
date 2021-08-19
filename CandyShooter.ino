@@ -1,8 +1,12 @@
-static const int TURRET_SPEED = 20;
+static const int TURRET_SPEED = 30;
 static const int ELEVATOR_SPEED = 20;
+static const int ENCODER_MIN = 280;
+static const int ENCODER_MAX = 930;
 
 void setupCandyShooter(){
     pinMode(CANDY_SHOOTER_RELAY_PIN, OUTPUT);
+    turretMotor.attach(TURRET_MOTOR_PIN,
+                             MIN_PWM_SIGNAL_WIDTH, MAX_PWM_SIGNAL_WIDTH);
 }
 
 void processCandyInput(){
@@ -21,14 +25,21 @@ void processCandyInput(){
         analogWrite(CANDY_LOADER_MOTOR_PIN, 128 - ELEVATOR_SPEED);
     }
 
+    int turretAngle = analogRead(TURRET_ENCODER_PIN);
+    Serial.println(turretAngle);
+    
     // TODO: add limit switches
-    if(radioLinkControlX <= 500){
+    if(radioLinkControlX <= 500 && turretAngle > ENCODER_MIN){
         Serial.println("turret turn left");
-        analogWrite(TURRET_MOTOR_PIN, 128 + TURRET_SPEED);
+        turretMotor.write(90 + TURRET_SPEED);
     }
-    else if(radioLinkControlX >= 1500){
+    else if(radioLinkControlX >= 1500 && turretAngle < ENCODER_MAX){
         Serial.println("turret turn right");
-        analogWrite(TURRET_MOTOR_PIN, 128 - TURRET_SPEED);
+        turretMotor.write(90 - TURRET_SPEED);
+    }
+    else{
+        Serial.println("turret not moving");
+        turretMotor.write(90);  
     }
 
     if(radioLinkButton == BUTTON_PRESSED){
