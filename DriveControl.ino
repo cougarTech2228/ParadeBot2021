@@ -1,3 +1,6 @@
+static int NON_CHILD_MAX_SPEED = 90;
+static int CHILD_MAX_SPEED = 45;
+
 /**************************************************************
    setupDriveMotors()
  **************************************************************/
@@ -21,11 +24,22 @@ void handleDriveMotors() {
   int tempRight = (100 - abs(turn)) * (throttle / 100) + throttle;
   int tempLeft = (100 - abs(throttle)) * (turn / 100) + turn;
 
+  int maxMotorSpeed;
+  int minMotorSpeed;
+  if(childModeEnabled){
+    maxMotorSpeed = 90 + CHILD_MAX_SPEED;
+    minMotorSpeed = 90 - CHILD_MAX_SPEED;
+  }
+  else{
+    maxMotorSpeed = 90 + NON_CHILD_MAX_SPEED;
+    minMotorSpeed = 90 - NON_CHILD_MAX_SPEED;
+  }
+
   int right = (tempRight + tempLeft) / 2;
   int left = (tempRight - tempLeft) / 2;
 
-  right = map(right, -100, 100, 180, 0);
-  left = map(left, -100, 100, 0, 180);
+  right = map(right, -100, 100, maxMotorSpeed, minMotorSpeed);
+  left = map(left, -100, 100, minMotorSpeed, maxMotorSpeed);
 
   rightDriveMotor.write(right);
   leftDriveMotor.write(left);

@@ -18,12 +18,12 @@ static const int LEFT_DRIVE_MOTOR_PIN = 14;
 static const int BALL_SHOOTER_LEFT_PIN = 7;
 static const int BALL_SHOOTER_RIGHT_PIN = 8;
 static const int TURRET_MOTOR_PIN = 6;
+static const int TURRET_LIMIT_LEFT = 24;
 static const int CANDY_LOADER_MOTOR_PIN = 5;
 
 static const int BALL_CYLINDER_RELAY_PIN = 22;
 static const int CANDY_SHOOTER_RELAY_PIN = 23;
 
-static const int TURRET_LIMIT_LEFT = 24;
 static const int TURRET_LIMIT_RIGHT = 25;
 static const int TURRET_ENCODER_PIN = A0;
 
@@ -88,7 +88,6 @@ int radioLinkButton = -1;
 Servo rightDriveMotor, leftDriveMotor;
 Servo ballShooterMotor, turretMotor;
 bool failSafeEnabled = false;
-bool botEnabled = false;
 bool childModeEnabled = true;
 bool receivedOneSBusPacketSinceReset = false;
 bool isAuto = false;
@@ -136,44 +135,55 @@ void setup() {
   setupButtonInterrupts();
   stopDriveMotors();
   
-  stopDriveMotors();
 
-  wdt_enable(WDTO_1S);
-  botEnabled = false;
 
   pinMode(A12, INPUT);
+  pinMode(CHILD_MODE_LED_PIN, OUTPUT);
+  pinMode(ENABLE_BOT_LED_PIN, OUTPUT);
+  pinMode(ENABLE_BOT_BUTTON_PIN, INPUT_PULLUP);
+  
+  digitalWrite(CHILD_MODE_LED_PIN, 0);
+  digitalWrite(ENABLE_BOT_LED_PIN, 0);
+  Serial.println("Press enable to start");
+  while(digitalRead(ENABLE_BOT_BUTTON_PIN) == 1){
+    
+  }
+  wdt_enable(WDTO_1S);
+  digitalWrite(ENABLE_BOT_LED_PIN, 1);
+  
   Serial.println("Set up");
 }
 
 /**************************************************************
    loop()
  **************************************************************/
+ int childModeRead = 1;
+ int childModeDebounceCount = 0;
 void loop() {
-
+  int currentChildModeButton = digitalRead(CHILD_MODE_BUTTON_PIN);
+  if(currentChildModeButton != childModeRead){
+    if(currentChildModeButton == 1 && childModeDebounceCount >= 100){
+      childModeEnabled = !childModeEnabled;
+    }
+    childModeRead = currentChildModeButton;
+  }
+  else{
+    if(currentChildModeButton == 0){
+      childModeDebounceCount++;
+      //Serial.println(childModeDebounceCount);
+    }
+    else{
+      if(childModeDebounceCount > 0){
+        Serial.println("Clearing");
+      }
+      childModeDebounceCount = 0;
+    }
+  }
   timedLoop();
-  /*
-  if (failSafeEnabled) {
-    stopDriveMotors();
-    botEnabled = false;
-  }
-  else if (botEnabled) {
-    // put your main code here, to run repeatedly:
-    
-      //handle drive motors is called from inside processControllerData();
-      processControllerData();
-    
-    wdt_reset();
-  }
-  else {
-    wdt_reset();
-  }
-  */
   wdt_reset();
   processControllerData();
   
   digitalWrite(CHILD_MODE_LED_PIN, childModeEnabled);
-  digitalWrite(ENABLE_BOT_LED_PIN, botEnabled);
-
   
 }
 
