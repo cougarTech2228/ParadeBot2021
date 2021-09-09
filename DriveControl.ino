@@ -1,5 +1,6 @@
-static int NON_CHILD_MAX_SPEED = 90;
-static int CHILD_MAX_SPEED = 45;
+static int NON_CHILD_MAX_SPEED = 60;
+static int CHILD_MAX_SPEED = 30
+;
 
 /**************************************************************
    setupDriveMotors()
@@ -18,12 +19,12 @@ void setupDriveMotors(){
    handleDriveMotors()
  **************************************************************/
 void handleDriveMotors() {
-  int throttle = map(radioLinkDriveY, 200, 1800, -100, 100);
-  int turn = -map(radioLinkDriveX, 200, 1800, -100, 100);
+  float throttle = -map(radioLinkDriveY, 200, 1800, -100, 100);
+  float turn = -map(radioLinkDriveX, 200, 1800, -100, 100);
 
-  int tempRight = (100 - abs(turn)) * (throttle / 100) + throttle;
-  int tempLeft = (100 - abs(throttle)) * (turn / 100) + turn;
-
+  int tempRight = ((100 - abs(turn)) * (throttle / (float)100)) + throttle;
+  int tempLeft = ((100 - abs(throttle)) * (turn / (float)100)) + turn;
+  
   int maxMotorSpeed;
   int minMotorSpeed;
   if(childModeEnabled){

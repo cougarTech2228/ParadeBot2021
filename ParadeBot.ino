@@ -145,8 +145,14 @@ void setup() {
   digitalWrite(CHILD_MODE_LED_PIN, 0);
   digitalWrite(ENABLE_BOT_LED_PIN, 0);
   Serial.println("Press enable to start");
+  int ledStatus = 0;
+  int ledLastChanged = 0;
   while(digitalRead(ENABLE_BOT_BUTTON_PIN) == 1){
-    
+    if(millis()-ledLastChanged > 250){
+      ledStatus = !ledStatus;
+      digitalWrite(ENABLE_BOT_LED_PIN, ledStatus);
+      ledLastChanged = millis();
+    }
   }
   wdt_enable(WDTO_1S);
   digitalWrite(ENABLE_BOT_LED_PIN, 1);
@@ -161,6 +167,8 @@ void setup() {
  int childModeDebounceCount = 0;
 void loop() {
   int currentChildModeButton = digitalRead(CHILD_MODE_BUTTON_PIN);
+  childModeEnabled = currentChildModeButton;
+  /*
   if(currentChildModeButton != childModeRead){
     if(currentChildModeButton == 1 && childModeDebounceCount >= 100){
       childModeEnabled = !childModeEnabled;
@@ -179,6 +187,7 @@ void loop() {
       childModeDebounceCount = 0;
     }
   }
+  */
   timedLoop();
   wdt_reset();
   processControllerData();
