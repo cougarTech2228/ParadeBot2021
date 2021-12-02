@@ -1,5 +1,5 @@
 static int NON_CHILD_MAX_SPEED = 60;
-static int CHILD_MAX_SPEED = 30
+static int CHILD_MAX_SPEED = 25
 ;
 
 /**************************************************************
@@ -24,9 +24,10 @@ void handleDriveMotors() {
 
   int tempRight = ((100 - abs(turn)) * (throttle / (float)100)) + throttle;
   int tempLeft = ((100 - abs(throttle)) * (turn / (float)100)) + turn;
-  
+
   int maxMotorSpeed;
   int minMotorSpeed;
+  
   if(childModeEnabled){
     maxMotorSpeed = 90 + CHILD_MAX_SPEED;
     minMotorSpeed = 90 - CHILD_MAX_SPEED;

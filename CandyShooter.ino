@@ -1,4 +1,4 @@
-static const int TURRET_SPEED = 30;
+static const int TURRET_SPEED = 60;
 static const int ELEVATOR_SPEED = 20;
 static const int ENCODER_MIN = 280;
 static const int ENCODER_MAX = 930;

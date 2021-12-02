@@ -111,13 +111,13 @@ int countIterations = 0;
 
 
 
-
 /**************************************************************
    setup()
  **************************************************************/
 void setup() {
   wdt_disable();
 
+  setupLED();
   setupDriveMotors();
   setupBallShooter();
   setupCandyShooter();
@@ -135,7 +135,6 @@ void setup() {
   setupButtonInterrupts();
   stopDriveMotors();
   
-
 
   pinMode(A12, INPUT);
   pinMode(CHILD_MODE_LED_PIN, OUTPUT);
@@ -166,8 +165,9 @@ void setup() {
  int childModeRead = 1;
  int childModeDebounceCount = 0;
 void loop() {
-  int currentChildModeButton = digitalRead(CHILD_MODE_BUTTON_PIN);
-  childModeEnabled = currentChildModeButton;
+  showLED();
+  //int currentChildModeButton = digitalRead(CHILD_MODE_BUTTON_PIN);
+  //childModeEnabled = currentChildModeButton;
   /*
   if(currentChildModeButton != childModeRead){
     if(currentChildModeButton == 1 && childModeDebounceCount >= 100){
@@ -191,6 +191,7 @@ void loop() {
   timedLoop();
   wdt_reset();
   processControllerData();
+
   
   digitalWrite(CHILD_MODE_LED_PIN, childModeEnabled);
   
