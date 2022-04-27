@@ -87,6 +87,7 @@ int radioLinkButton = -1;
 
 Servo rightDriveMotor, leftDriveMotor;
 Servo ballShooterMotor, turretMotor;
+Servo candyLoaderMotor;
 bool failSafeEnabled = false;
 bool childModeEnabled = true;
 bool receivedOneSBusPacketSinceReset = false;
@@ -117,7 +118,7 @@ int countIterations = 0;
 void setup() {
   wdt_disable();
 
-  setupLED();
+  //setupLED();
   setupDriveMotors();
   setupBallShooter();
   setupCandyShooter();
@@ -165,7 +166,7 @@ void setup() {
  int childModeRead = 1;
  int childModeDebounceCount = 0;
 void loop() {
-  showLED();
+ // showLED();
   //int currentChildModeButton = digitalRead(CHILD_MODE_BUTTON_PIN);
   //childModeEnabled = currentChildModeButton;
   /*
